@@ -1,6 +1,6 @@
 import { Box, Icon, MenuItem, MenuList, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { BioLink, Bookings, Invoicing, MediaKit, Store } from "../icons";
+import { BioLink, Bookings, Invoicing, MediaKit, Store } from "./icons";
 
 interface IAppsListProps {}
 

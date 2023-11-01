@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Flex,
-  Link,
-  Menu,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Link, Menu, Text } from "@chakra-ui/react";
 import Logo from "../logo";
 import {
   Analytics,
@@ -16,7 +10,7 @@ import {
   HomeIcon,
   Notification,
   Revenue,
-} from "../icons";
+} from "./icons";
 import AppsList from "./apps-list";
 import NavMenuButton from "./nav-menu-button";
 
@@ -49,7 +43,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
         </Link>
         <Flex gap="1.25rem">
           {navMenu.map((menu, index) => (
-            <Menu>
+            <Menu key={menu.title}>
               {({ isOpen }) => (
                 <>
                   <NavMenuButton

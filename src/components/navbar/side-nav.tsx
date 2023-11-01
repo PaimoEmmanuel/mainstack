@@ -1,5 +1,5 @@
 import { Box, Flex, Tooltip, VStack } from "@chakra-ui/react";
-import { BioLink, Invoicing, MediaKit, Store } from "../icons";
+import { BioLink, Invoicing, MediaKit, Store } from "./icons";
 
 const links = [
   { title: "Link in Bio", Icon: BioLink },

@@ -16,7 +16,6 @@ const NavMenuButton: React.FunctionComponent<IMenuButtonProps> = ({
 }) => {
   return (
     <MenuButton
-      key={menu.title}
       _hover={{
         bgColor: activeLinkIndex === index || isOpen ? "dark.100" : "gray.100",
       }}

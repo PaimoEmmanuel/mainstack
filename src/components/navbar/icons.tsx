@@ -507,3 +507,4 @@ export const Bookings = () => (
     </defs>
   </svg>
 );
+
