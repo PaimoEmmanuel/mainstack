@@ -1,15 +1,15 @@
 import { Box, Flex, Icon, Skeleton, Text } from "@chakra-ui/react";
-import * as React from "react";
-import { useQuery } from "react-query";
+import useWalletQuery from "../../hooks/use-wallet";
 
-interface IAccountWalletProps {}
+const AccountWallet = () => {
+  const { isLoading, error, data } = useWalletQuery();
 
-const AccountWallet: React.FC<IAccountWalletProps> = () => {
-  const { isLoading, error, data } = useQuery("get_wallet", () =>
-    fetch("https://fe-task-api.mainstack.io/wallet").then((res) => res.json())
-  );
-
-  if (error) return "An error has occurred, please try again.";
+  if (error)
+    return (
+      <Text data-testid="wallet-error">
+        An error has occurred, please try again.
+      </Text>
+    );
   const accountWalletData = [
     { title: "Ledger Balance", value: data?.ledger_balance },
     { title: "Total Payout", value: data?.total_payout },
@@ -18,8 +18,8 @@ const AccountWallet: React.FC<IAccountWalletProps> = () => {
   ];
   return (
     <Box minW="16.9375rem">
-      {accountWalletData?.map((data) => (
-        <Box key={data?.title} mb="2rem">
+      {accountWalletData?.map((data, index) => (
+        <Box key={data?.title} mb="2rem" data-testid={`wallet-item-${index}`}>
           <Flex justifyContent="space-between" alignItems="center" mb="0.625">
             <Text fontSize="0.875rem" fontWeight="500" color="gray.400">
               {data?.title}
@@ -49,7 +49,10 @@ const AccountWallet: React.FC<IAccountWalletProps> = () => {
               </g>
             </Icon>
           </Flex>
-          <Skeleton isLoaded={!isLoading}>
+          <Skeleton
+            isLoaded={!isLoading}
+            data-testid={`wallet-loading-${index}`}
+          >
             <Text fontSize="1.75rem" fontWeight="700" h="2rem">
               USD {data.value}
             </Text>

@@ -30,14 +30,14 @@ const transactions: ITransactionItemProps[] = [
   },
   {
     type: "incoming",
-    title: "Alan",
+    title: "Dylan",
     clientName: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
   {
     type: "incoming",
-    title: "Alan",
+    title: "Umar Jombo",
     clientName: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
