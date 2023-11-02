@@ -6,7 +6,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import TransactionItem, { ITransactionItemProps } from "./transaction-item";
 import FilterDrawer from "../filter";
 import { FilterContext } from "../../contexts/filter";
@@ -14,43 +14,7 @@ import { useQuery } from "react-query";
 
 interface IAccountTransactionsProps {}
 
-const transactionsDefault: ITransactionItemProps[] = [
-  {
-    type: "deposite",
-    title: "Mom",
-    status: "Pascal Ama",
-    amount: "3.40 USD",
-    date: "20/03/19",
-  },
-  {
-    type: "withdrawal",
-    title: "Imposer Alan",
-    status: "Pascal Ama",
-    amount: "3.40 USD",
-    date: "20/03/19",
-  },
-  {
-    type: "deposite",
-    title: "Alan",
-    status: "Pascal Ama",
-    amount: "3.40 USD",
-    date: "20/03/19",
-  },
-  {
-    type: "deposite",
-    title: "Dylan",
-    status: "Pascal Ama",
-    amount: "3.40 USD",
-    date: "20/03/19",
-  },
-  {
-    type: "deposite",
-    title: "Umar Jombo",
-    status: "Pascal Ama",
-    amount: "3.40 USD",
-    date: "20/03/19",
-  },
-];
+
 const AccountTransactions: React.FunctionComponent<
   IAccountTransactionsProps
 > = () => {
