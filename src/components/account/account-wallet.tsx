@@ -1,22 +1,28 @@
-import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Skeleton, Text } from "@chakra-ui/react";
 import * as React from "react";
+import { useQuery } from "react-query";
 
-interface IAccountBreakdownProps {}
+interface IAccountWalletProps {}
 
-const accountBreakdownData = [
-  { title: "Ledger Balance", value: "USD 0.00" },
-  { title: "Total Payout", value: "USD 55,080.00" },
-  { title: "Total Revenue", value: "USD 175,580.00" },
-  { title: "Pending Payout", value: "USD 0.00" },
-];
-const AccountBreakdown: React.FC<IAccountBreakdownProps> = () => {
+const AccountWallet: React.FC<IAccountWalletProps> = () => {
+  const { isLoading, error, data } = useQuery("get_wallet", () =>
+    fetch("https://fe-task-api.mainstack.io/wallet").then((res) => res.json())
+  );
+
+  if (error) return "An error has occurred, please try again.";
+  const accountWalletData = [
+    { title: "Ledger Balance", value: data?.ledger_balance },
+    { title: "Total Payout", value: data?.total_payout },
+    { title: "Total Revenue", value: data?.total_revenue },
+    { title: "Pending Payout", value: data?.pending_payout },
+  ];
   return (
     <Box minW="16.9375rem">
-      {accountBreakdownData.map((data) => (
-        <Box key={data.title} mb="2rem">
+      {accountWalletData?.map((data) => (
+        <Box key={data?.title} mb="2rem">
           <Flex justifyContent="space-between" alignItems="center" mb="0.625">
             <Text fontSize="0.875rem" fontWeight="500" color="gray.400">
-              {data.title}
+              {data?.title}
             </Text>
             <Icon
               width="1.25rem"
@@ -43,14 +49,15 @@ const AccountBreakdown: React.FC<IAccountBreakdownProps> = () => {
               </g>
             </Icon>
           </Flex>
-
-          <Text fontSize="1.75rem" fontWeight="700">
-            {data.value}
-          </Text>
+          <Skeleton isLoaded={!isLoading}>
+            <Text fontSize="1.75rem" fontWeight="700" h="2rem">
+              USD {data.value}
+            </Text>
+          </Skeleton>
         </Box>
       ))}
     </Box>
   );
 };
 
-export default AccountBreakdown;
+export default AccountWallet;

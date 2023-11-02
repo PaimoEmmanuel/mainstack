@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Flex, Link, Menu, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Menu, Skeleton, Text } from "@chakra-ui/react";
 import Logo from "../logo";
 import {
   Analytics,
@@ -13,6 +13,7 @@ import {
 } from "./icons";
 import AppsList from "./apps-list";
 import NavMenuButton from "./nav-menu-button";
+import { useQuery } from "react-query";
 
 interface INavbarProps {}
 
@@ -25,6 +26,11 @@ const navMenu = [
 ];
 const Navbar: React.FunctionComponent<INavbarProps> = () => {
   const [activeLinkIndex] = useState(2);
+  const { isLoading, error, data } = useQuery("get_user_data", () =>
+    fetch("https://fe-task-api.mainstack.io/user").then((res) => res.json())
+  );
+
+  if (error) return "An error has occurred, please try again.";
   return (
     <Box pos="fixed" h="5.125rem" w="100%" bgColor="white" zIndex="99">
       <Flex
@@ -73,20 +79,23 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
             bgColor="gray.100"
             borderRadius="6.5rem"
           >
-            <Text
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              color="white"
-              fontSize="0.875rem"
-              fontWeight="600"
-              h="2rem"
-              w="2rem"
-              borderRadius="100%"
-              bg="linear-gradient(139deg, #5C6670 2.33%, #131316 96.28%)"
-            >
-              OJ
-            </Text>
+            <Skeleton isLoaded={!isLoading}>
+              <Text
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                color="white"
+                fontSize="0.875rem"
+                fontWeight="600"
+                h="2rem"
+                w="2rem"
+                borderRadius="100%"
+                bg="linear-gradient(139deg, #5C6670 2.33%, #131316 96.28%)"
+              >
+                {data?.first_name[0]} {data?.last_name[0]}
+              </Text>
+            </Skeleton>
+
             <Hamburger />
           </Flex>
         </Flex>

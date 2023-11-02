@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import * as React from "react";
 import AccountDetail from "./account-detail";
-import AccountBreakdown from "./account-breakdown";
+import AccountWallet from "./account-wallet";
 import AccountTransactions from "./transactions";
 
 const Account: React.FunctionComponent = () => {
@@ -9,7 +9,7 @@ const Account: React.FunctionComponent = () => {
     <Box>
       <Flex flexWrap="wrap" justifyContent="space-between" rowGap="3rem">
         <AccountDetail />
-        <AccountBreakdown />
+        <AccountWallet />
       </Flex>
       <Box mt="5.375rem">
         <AccountTransactions />

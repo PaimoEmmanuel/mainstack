@@ -27,6 +27,7 @@ const SideNav: React.FunctionComponent = () => {
       >
         {links.map((link) => (
           <Tooltip
+            key={link.title}
             hasArrow
             label={link.title}
             bg="dark.100"
