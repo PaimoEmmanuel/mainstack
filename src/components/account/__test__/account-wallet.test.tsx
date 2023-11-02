@@ -54,5 +54,6 @@ describe("Users component", () => {
     }));
     render(<AccountWallet />, { wrapper });
     expect(screen.getByText(/USD 1250.56/i)).toBeVisible();
+    expect(screen.getByText(/USD 0/i)).toBeVisible();
   });
 });

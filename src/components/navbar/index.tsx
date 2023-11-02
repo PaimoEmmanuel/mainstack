@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Box, Flex, Link, Menu, Skeleton, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Skeleton,
+  Text,
+} from "@chakra-ui/react";
 import Logo from "../logo";
 import {
   Analytics,
@@ -14,6 +24,7 @@ import {
 import AppsList from "./apps-list";
 import NavMenuButton from "./nav-menu-button";
 import { useQuery } from "react-query";
+import ProfileMenu from "./profile-menu";
 
 interface INavbarProps {}
 
@@ -71,33 +82,44 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
           <Box as="button" mr="1rem">
             <Chat />
           </Box>
-          <Flex
-            as="button"
-            gap="0.5rem"
-            alignItems="center"
-            p="0.25rem 0.75rem 0.25rem 0.3125rem"
-            bgColor="gray.100"
-            borderRadius="6.5rem"
-          >
-            <Skeleton isLoaded={!isLoading}>
-              <Text
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                color="white"
-                fontSize="0.875rem"
-                fontWeight="600"
-                h="2rem"
-                w="2rem"
-                borderRadius="100%"
-                bg="linear-gradient(139deg, #5C6670 2.33%, #131316 96.28%)"
-              >
-                {data?.first_name[0]} {data?.last_name[0]}
-              </Text>
-            </Skeleton>
+          <Menu>
+            <MenuButton
+              sx={{
+                span: {
+                  display: "flex",
+                  gap: "0.5rem",
+                  alignItems: "center",
+                  p: "0.25rem 0.75rem 0.25rem 0.3125rem",
+                  bgColor: "gray.100",
+                  borderRadius: "6.5rem",
+                },
+              }}
+            >
+              <Skeleton isLoaded={!isLoading}>
+                <Text
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  color="white"
+                  fontSize="0.875rem"
+                  fontWeight="600"
+                  h="2rem"
+                  w="2rem"
+                  borderRadius="100%"
+                  bg="linear-gradient(139deg, #5C6670 2.33%, #131316 96.28%)"
+                >
+                  {data?.first_name[0]} {data?.last_name[0]}
+                </Text>
+              </Skeleton>
 
-            <Hamburger />
-          </Flex>
+              <Hamburger />
+            </MenuButton>
+            <ProfileMenu
+              firstName={data?.first_name}
+              lastName={data?.last_name}
+              email={data?.email}
+            />
+          </Menu>
         </Flex>
       </Flex>
     </Box>
