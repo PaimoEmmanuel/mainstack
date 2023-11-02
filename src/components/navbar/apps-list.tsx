@@ -41,7 +41,7 @@ const AppsList: React.FunctionComponent<IAppsListProps> = () => {
           gap="0.75rem"
           alignItems="center"
           mb="0.5rem"
-          role="group"
+          className="group"
         >
           <Box
             borderWidth="1px"
