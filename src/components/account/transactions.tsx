@@ -1,44 +1,52 @@
-import { Box, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import { useContext, useRef } from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  Skeleton,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useContext, useRef, useState } from "react";
 import TransactionItem, { ITransactionItemProps } from "./transaction-item";
 import FilterDrawer from "../filter";
 import { FilterContext } from "../../contexts/filter";
+import { useQuery } from "react-query";
 
 interface IAccountTransactionsProps {}
 
-const transactions: ITransactionItemProps[] = [
+const transactionsDefault: ITransactionItemProps[] = [
   {
-    type: "incoming",
+    type: "deposite",
     title: "Mom",
-    clientName: "Pascal Ama",
+    status: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
   {
-    type: "outgoing",
+    type: "withdrawal",
     title: "Imposer Alan",
-    clientName: "Pascal Ama",
+    status: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
   {
-    type: "incoming",
+    type: "deposite",
     title: "Alan",
-    clientName: "Pascal Ama",
+    status: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
   {
-    type: "incoming",
+    type: "deposite",
     title: "Dylan",
-    clientName: "Pascal Ama",
+    status: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
   {
-    type: "incoming",
+    type: "deposite",
     title: "Umar Jombo",
-    clientName: "Pascal Ama",
+    status: "Pascal Ama",
     amount: "3.40 USD",
     date: "20/03/19",
   },
@@ -52,7 +60,29 @@ const AccountTransactions: React.FunctionComponent<
     onClose: onFilterClose,
   } = useDisclosure();
   const filterBtnRef = useRef(null);
-  const { data } = useContext(FilterContext);
+  const { data: filterData } = useContext(FilterContext);
+
+  const { isLoading, error, data } = useQuery("get_transactions", () =>
+    fetch("https://fe-task-api.mainstack.io/transactions").then((res) =>
+      res.json()
+    )
+  );
+
+  if (error) return "An error has occurred, please try again.";
+  console.log(data);
+  // const [transactionsData, settransactionsData] = useState(transactionsDefault)
+  const transactionsData: ITransactionItemProps[] = data?.map(
+    (transaction: any) => ({
+      amount: transaction.amount,
+      type: transaction.type,
+      date: transaction.date,
+      status: transaction.status,
+      title:
+        transaction?.metadata?.product_name ||
+        transaction?.metadata?.name ||
+        transaction.type,
+    })
+  );
   return (
     <>
       <Box>
@@ -83,7 +113,7 @@ const AccountTransactions: React.FunctionComponent<
               alignItems="center"
             >
               Filter
-              {data.noOfFilters > 0 ? (
+              {filterData.noOfFilters > 0 ? (
                 <Text
                   as="span"
                   bgColor="dark.100"
@@ -96,7 +126,7 @@ const AccountTransactions: React.FunctionComponent<
                   alignItems="center"
                   fontSize="14px"
                 >
-                  {data.noOfFilters}
+                  {filterData.noOfFilters}
                 </Text>
               ) : null}
               <svg
@@ -159,8 +189,10 @@ const AccountTransactions: React.FunctionComponent<
           </Flex>
         </Flex>
         <Box mt="2rem">
-          {transactions.map((transaction) => (
-            <TransactionItem key={transaction.title} {...transaction} />
+          {transactionsData?.map((transaction) => (
+            <Skeleton key={transaction.title} isLoaded={!isLoading}>
+              <TransactionItem key={transaction.title} {...transaction} />
+            </Skeleton>
           ))}
         </Box>
       </Box>

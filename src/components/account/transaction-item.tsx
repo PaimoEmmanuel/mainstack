@@ -2,9 +2,9 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 export interface ITransactionItemProps {
-  type: "incoming" | "outgoing";
+  type: "deposite" | "withdrawal";
   title: string;
-  clientName: string;
+  status: string;
   amount: string;
   date: string;
 }
@@ -12,7 +12,7 @@ export interface ITransactionItemProps {
 const TransactionItem: React.FunctionComponent<ITransactionItemProps> = ({
   type,
   title,
-  clientName,
+  status,
   amount,
   date,
 }) => {
@@ -22,8 +22,18 @@ const TransactionItem: React.FunctionComponent<ITransactionItemProps> = ({
         <TransactionIcon transactionType={type} />
         <Box>
           <Text fontWeight="500">{title}</Text>
-          <Text fontWeight="500" fontSize="0.875rem">
-            {clientName}
+          <Text
+            fontWeight="500"
+            fontSize="0.875rem"
+            color={
+              status === "successful"
+                ? "#0EA163"
+                : status === "pending"
+                ? "#A77A07"
+                : "dark.100"
+            }
+          >
+            {status}
           </Text>
         </Box>
       </Flex>
@@ -57,7 +67,7 @@ const TransactionIcon = ({
       cx="24.5"
       cy="24.5"
       r="24"
-      fill={transactionType === "incoming" ? "#E3FCF2" : "#F9E3E0"}
+      fill={transactionType === "deposite" ? "#E3FCF2" : "#F9E3E0"}
     />
     <mask
       id="mask0_1387_243"
@@ -70,7 +80,7 @@ const TransactionIcon = ({
       <rect x="14.5" y="14.5" width="20" height="20" fill="#C4C4C4" />
     </mask>
     <g mask="url(#mask0_1387_243)">
-      {transactionType === "incoming" ? (
+      {transactionType === "deposite" ? (
         <path
           d="M19.25 29.75V22.25H20.0833V28.3333L30.1667 18.25L30.75 18.8333L20.6667 28.9167H26.75V29.75H19.25Z"
           fill="#075132"

@@ -115,8 +115,8 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
               <Hamburger />
             </MenuButton>
             <ProfileMenu
-              firstName={data?.first_name}
-              lastName={data?.last_name}
+              firstName={data?.first_name|| "O"}
+              lastName={data?.last_name|| "J"}
               email={data?.email}
             />
           </Menu>
